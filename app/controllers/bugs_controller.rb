@@ -1,5 +1,6 @@
 class BugsController < ApplicationController
 	before_action :set_user
+	before_action :sanitize_bug_params
 	before_action :set_user_bug, only: [:show, :update, :destroy]
 
 	# GET /users/:user_id/bugs
@@ -43,4 +44,10 @@ class BugsController < ApplicationController
 	def set_user_bug
 		@bug = @user.bugs.find_by!(id: params[:id]) if @user
 	end
+
+	def sanitize_bug_params
+   		params[:priority] = params[:priority].to_i
+   		params[:issue_type] = params[:issue_type].to_i
+		params[:status] = params[:status].to_i
+ 	end
 end
